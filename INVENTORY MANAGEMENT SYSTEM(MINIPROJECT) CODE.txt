@@ -1,0 +1,120 @@
+#include <stdio.h>
+#define MAX 100
+
+struct Item {
+    int id;
+    char name[30];
+    int quantity;
+    float price;
+};
+
+struct Item inv[MAX];
+int count = 0;
+
+void addItem() {
+    if (count >= MAX) {
+        printf("Inventory full!\n");
+        return;
+    }
+
+    printf("\nEnter Item ID: ");
+    scanf("%d", &inv[count].id);
+
+    printf("\nEnter Item Name: ");
+    scanf("%s", inv[count].name);
+
+    printf("\nEnter Quantity: ");
+    scanf("%d", &inv[count].quantity);
+
+    printf("\nEnter Price: ");
+    scanf("%f", &inv[count].price);
+
+    count++;
+    printf("Item added successfully!\n");
+}
+
+void displayItems() {
+    if (count == 0) {
+        printf("\nNo items in inventory.\n");
+        return;
+    }
+
+    printf("\nID\tName\tQuantity\tPrice\n");
+    printf("---------------------------------------------\n");
+    for (int i = 0; i < count; i++) {
+        printf("%d\t%s\t%d\t\t%.2f\n",
+               inv[i].id, inv[i].name,
+               inv[i].quantity, inv[i].price);
+    }
+}
+
+
+
+
+
+
+
+
+
+void searchItem() {
+    int id, found = 0;
+    printf("\nEnter Item ID to search: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (inv[i].id == id) {
+            printf("\nItem Found!");
+            printf("\nName: %s", inv[i].name);
+            printf("\nQuantity: %d", inv[i].quantity);
+            printf("\nPrice: %.2f\n", inv[i].price);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+        printf("Item not found!\n");
+}
+void updateQuantity() {
+    int id;
+    printf("\nEnter Item ID to update quantity: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (inv[i].id == id) {
+            printf("Enter new quantity: ");
+            scanf("%d", &inv[i].quantity);
+            printf("Quantity updated successfully!\n");
+            return;
+        }
+    }
+    printf("Item not found!\n");
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("\n===== Inventory Management System =====");
+        printf("\n1. Add Item");
+        printf("\n2. Display Items");
+        printf("\n3. Search Item");
+        printf("\n4. Update Quantity");
+        printf("\n5. Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addItem(); break;
+            case 2: displayItems(); break;
+            case 3: searchItem(); break;
+            case 4: updateQuantity(); break;
+            case 5: printf("Exiting program...\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } 
+
+while (choice != 5);
+
+return 0;
+}
